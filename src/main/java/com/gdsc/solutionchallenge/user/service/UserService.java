@@ -39,7 +39,7 @@ public class UserService {
                 .password(encoder.encode(signUpReq.getPassword()))
                 .nickname(signUpReq.getNickname())
                 .role("ROLE_USER")
-                .social("") // 소셜 로그인이 아닌 자체 로그인이기 때문
+                .registrationId("") // 소셜 로그인이 아닌 자체 로그인이기 때문
                 .build();
         User newUser = userRepository.save(user);
         return UserRes.SignUpRes.builder().message("signup success!").build();
