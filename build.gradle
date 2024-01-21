@@ -16,38 +16,53 @@ repositories {
 }
 
 dependencies {
-    //jpa
+    // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    // security && jwt
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     //web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    //security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    //gcp
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter', version: '1.30.5.RELEASE'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-storage', version: '1.30.5.RELEASE'
-
-    //lombok
+    // lombok
     compileOnly 'org.projectlombok:lombok'
+
+    //docker
+    //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+    //json
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+
+    //mysql
+    implementation 'commons-io:commons-io:2.11.0'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    //swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    //S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    //firebase
+    implementation 'com.google.firebase:firebase-admin:9.1.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+
+    //OAuth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //WebClient
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     annotationProcessor 'org.projectlombok:lombok'
-
-    //database
-    implementation 'com.mysql:mysql-connector-j'
-
-    //jwt
-    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
-
-    //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    //oauth
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
