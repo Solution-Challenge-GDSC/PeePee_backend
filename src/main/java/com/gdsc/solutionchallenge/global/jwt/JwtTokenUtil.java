@@ -31,7 +31,7 @@ public class JwtTokenUtil {
 
     private final UserDetailsService userDetailsService;
 
-    @Value("${jwtmodule.secret-key}")
+    @Value("${jwt.secret-key}")
     private String secretKey ;
     private Key key;
 
