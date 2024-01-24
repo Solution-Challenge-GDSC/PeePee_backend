@@ -53,6 +53,7 @@ public class OAuthAttributes {
         return User.builder()
                 .nickname(name)
                 .email(email)
+                .profileImage(profileImageUrl)
                 .role("ROLE_USER")
                 .registrationId("google")
                 .build();
