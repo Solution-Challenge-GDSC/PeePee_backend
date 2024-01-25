@@ -56,19 +56,21 @@ public class WebSecurityConfig {
                         .authorizationEndpoint(authorizationEndpoint ->
                                 authorizationEndpoint
                                         //권한 부여 엔드포인트
-                                        .baseUri("/oauth2/authorize")
+//                                        .baseUri("/oauth2/authorize")
                                         //권한 요청 저장
                                         .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
                         )
                         .redirectionEndpoint(redirectionEndpoint ->
                                 redirectionEndpoint
-                                        //
+                                        //리다이렉션 엔드포인트, OAuth2 인증 완료 후 리다이렉션
                                         .baseUri("/login/oauth2/code/**")
                         )
                         .userInfoEndpoint(userInfoEndpoint ->
                                 userInfoEndpoint
+                                        //customOAuth2UserService 사용해 정보 가져오기
                                         .userService(customOAuth2UserService)
                         )
+                        //인증 성공 시 호출, 인증 후 수행 동작 정의 핸들러
                         .successHandler(oAuth2AuthenticationSuccessHandler)
                 );
 
