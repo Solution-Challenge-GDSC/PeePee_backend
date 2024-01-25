@@ -31,6 +31,7 @@ public class WebSecurityConfig {
     public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         http
@@ -54,11 +55,14 @@ public class WebSecurityConfig {
                 .oauth2Login(oauth2Login -> oauth2Login
                         .authorizationEndpoint(authorizationEndpoint ->
                                 authorizationEndpoint
-//                                        .baseUri("/oauth2/authorize")
+                                        //권한 부여 엔드포인트
+                                        .baseUri("/oauth2/authorize")
+                                        //권한 요청 저장
                                         .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
                         )
                         .redirectionEndpoint(redirectionEndpoint ->
                                 redirectionEndpoint
+                                        //
                                         .baseUri("/login/oauth2/code/**")
                         )
                         .userInfoEndpoint(userInfoEndpoint ->
