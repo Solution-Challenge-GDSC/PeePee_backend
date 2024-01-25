@@ -1,7 +1,6 @@
 package com.gdsc.solutionchallenge.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponse;
 import com.gdsc.solutionchallenge.global.jwt.JwtTokenUtil;
 import com.gdsc.solutionchallenge.user.dto.Token;
@@ -11,18 +10,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Optional;
-import jakarta.servlet.http.Cookie;
-
-import static com.gdsc.solutionchallenge.global.exception.ApiResponseStatus.BAD_REQUEST;
-import static com.gdsc.solutionchallenge.oauth.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 @Component
 @RequiredArgsConstructor
@@ -41,9 +34,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write(new ObjectMapper().writeValueAsString(apiResponse));
         response.getWriter().flush();
-
     }
-
 
     private ApiResponse<Token> generateApiResponse(Authentication authentication) {
         if (authentication.getPrincipal() instanceof DefaultOAuth2User) {
