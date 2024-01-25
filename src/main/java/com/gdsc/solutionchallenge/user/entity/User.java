@@ -33,8 +33,11 @@ public class User implements UserDetails {
     @Column(name = "nickname")
     private String nickname;
 
-    @Column(name="social")
-    private String social;
+    @Column(name="registrationId")
+    private String registrationId;
+
+    @Column(name="profile_image")
+    private String profileImage;
 
     @Column(name="role")
     private String role;
@@ -47,6 +50,10 @@ public class User implements UserDetails {
         return authorities;
     }
 
+    public User update(String nickname){
+        this.nickname = nickname;
+        return this;
+    }
     @Override
     public String getPassword() {
         return password;
