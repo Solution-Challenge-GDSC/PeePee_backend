@@ -4,7 +4,6 @@ import com.gdsc.solutionchallenge.board.entity.PostPhoto;
 import com.gdsc.solutionchallenge.board.repository.PostPhotoRepository;
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponseStatus;
-import com.gdsc.solutionchallenge.user.entity.User;
 import com.gdsc.solutionchallenge.user.repository.UserRepository;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobInfo;
@@ -27,7 +26,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class ImageUploadService {
+public class BoardImageUploadService {
 
     private final Storage storage;
     private final UserRepository userRepository;
