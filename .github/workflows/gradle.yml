@@ -36,7 +36,6 @@ jobs:
         touch ./src/main/resources/neat-planet-409813-53c54e5b9594.json
         echo "${{ secrets.PROPERTIES_JSON }}" > ./src/main/resources/neat-planet-409813-53c54e5b9594.json
       shell: bash
-     
 
     # 1. Gradlew 실행 권한 추가
     - name: Run chmod to make gradlew executable
