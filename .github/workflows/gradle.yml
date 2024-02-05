@@ -31,11 +31,13 @@ jobs:
       shell: bash
 
     # 0-2. git ignore에 등록된 GDS 관련 파일 생성해주기
-    - name: make json file
-      run: |
-        touch ./src/main/resources/neat-planet-409813-53c54e5b9594.json
-        echo "${{ secrets.PROPERTIES_JSON }}" > ./src/main/resources/neat-planet-409813-53c54e5b9594.json
-      shell: bash
+    - name: create-json
+      id: create-json
+      uses: jsdaniell/create-json@v1.2.3
+      with:
+        name: "babybaby.json"
+        json: ${{ secrets.PROPERTIES_JSON }}
+        dir: './src/main/resources/'
 
     # 1. Gradlew 실행 권한 추가
     - name: Run chmod to make gradlew executable
