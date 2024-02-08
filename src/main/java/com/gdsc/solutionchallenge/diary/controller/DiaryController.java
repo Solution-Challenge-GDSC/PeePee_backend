@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/diary")
+@CrossOrigin("exp://172.30.1.31:8081")
 @Tag(name="Diary❤", description = "Diary 관련 Api")
 public class DiaryController {
     private final DiaryService diaryService;
