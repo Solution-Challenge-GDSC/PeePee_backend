@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/diary")
-@CrossOrigin("exp://172.30.1.31:8081")
+@CrossOrigin(origins = "*")
 @Tag(name="Diary❤", description = "Diary 관련 Api")
 public class DiaryController {
     private final DiaryService diaryService;
