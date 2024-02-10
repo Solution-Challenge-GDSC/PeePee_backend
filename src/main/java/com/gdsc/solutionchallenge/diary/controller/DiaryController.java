@@ -30,10 +30,10 @@ public class DiaryController {
 
 
     /** 다이어리 작성하기 **/
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
     @Operation(summary = "다이어리 생성", description = "다이어리 생성")
     public ApiResponse<String> createDiary(Principal principal, @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles,
-                                           @Validated @RequestPart(value = "postDiaryReq") DiaryReq.postDiaryReq postDiaryReq) {
+                                           @RequestPart(value = "postDiaryReq") DiaryReq.postDiaryReq postDiaryReq) {
         try {
             return new ApiResponse<>(diaryService.createDiary(principal.getName(), postDiaryReq, multipartFiles));
         }
