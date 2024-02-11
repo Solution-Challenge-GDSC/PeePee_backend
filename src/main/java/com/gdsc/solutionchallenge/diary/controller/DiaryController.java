@@ -35,6 +35,7 @@ public class DiaryController {
     public ApiResponse<String> createDiary(Principal principal, @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles,
                                            @RequestPart(value = "postDiaryReq") DiaryReq.postDiaryReq postDiaryReq) {
         try {
+            logger.info("Received postDiaryReq: {}", postDiaryReq);
             return new ApiResponse<>(diaryService.createDiary(principal.getName(), postDiaryReq, multipartFiles));
         }
         catch (ApiException exception) {
