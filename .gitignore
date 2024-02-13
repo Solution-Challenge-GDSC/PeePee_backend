@@ -28,7 +28,6 @@ out/
 application.yml
 application-oauth.yml
 babybaby.json
-./src/main/resources/babybaby.json
 
 ### NetBeans ###
 /nbproject/private/
@@ -39,3 +38,4 @@ babybaby.json
 
 ### VS Code ###
 .vscode/
+/src/main/resources/babybaby.json
