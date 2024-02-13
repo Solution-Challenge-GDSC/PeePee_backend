@@ -1,7 +1,7 @@
 package com.gdsc.solutionchallenge.meetup.service;
 
+import com.gdsc.solutionchallenge.global.image.BoardImageUploadService;
 import com.gdsc.solutionchallenge.global.image.GetGDSRes;
-import com.gdsc.solutionchallenge.global.image.ImageUploadService;
 import com.gdsc.solutionchallenge.meetup.entity.Meetup;
 import com.gdsc.solutionchallenge.meetup.entity.MeetupPhoto;
 import com.gdsc.solutionchallenge.meetup.repository.MeetupPhotoRepository;
@@ -17,7 +17,7 @@ import java.util.List;
 public class MeetupPhotoService {
 
     private final MeetupPhotoRepository meetupPhotoRepository;
-    private final ImageUploadService imageUploadService;
+    private final BoardImageUploadService imageUploadService;
 
     @Transactional
     public void saveMeetupPhoto(List<MeetupPhoto> meetupPhotos){
@@ -53,7 +53,7 @@ public class MeetupPhotoService {
     @Transactional
     public void deleteAllMeetupPhotos(List<MeetupPhoto> meetupPhotos){
         for (MeetupPhoto meetupPhoto  : meetupPhotos) {
-            imageUploadService.deleteImage(meetupPhoto.getFileName());
+            imageUploadService.deleteMeetupImage(meetupPhoto.getFileName());
         }
     }
 

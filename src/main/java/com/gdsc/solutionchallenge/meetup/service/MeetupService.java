@@ -2,15 +2,14 @@ package com.gdsc.solutionchallenge.meetup.service;
 
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponseStatus;
+import com.gdsc.solutionchallenge.global.image.BoardImageUploadService;
 import com.gdsc.solutionchallenge.global.image.GetGDSRes;
-import com.gdsc.solutionchallenge.global.image.ImageUploadService;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupReq;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupRes;
 import com.gdsc.solutionchallenge.meetup.entity.Meetup;
 import com.gdsc.solutionchallenge.meetup.entity.MeetupPhoto;
 import com.gdsc.solutionchallenge.meetup.repository.MeetupPhotoRepository;
 import com.gdsc.solutionchallenge.meetup.repository.MeetupRepository;
-import com.gdsc.solutionchallenge.meetup.service.MeetupPhotoService;
 import com.gdsc.solutionchallenge.user.entity.User;
 import com.gdsc.solutionchallenge.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +34,7 @@ public class MeetupService {
     private final UserRepository userRepository;
     private final MeetupPhotoRepository meetupPhotoRepository;
     private final MeetupPhotoService meetupPhotoService;
-    private final ImageUploadService imageUploadService;
+    private final BoardImageUploadService imageUploadService;
 
     @Transactional
     public String createMeetup(String email, MeetupReq.PostMeetupReq postMeetupReq, List<MultipartFile> multipartFiles) {

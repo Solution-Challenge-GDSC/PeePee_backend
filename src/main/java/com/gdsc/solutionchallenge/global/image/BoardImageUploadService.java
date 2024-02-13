@@ -90,4 +90,15 @@ public class BoardImageUploadService {
         Storage.BlobSourceOption precondition = Storage.BlobSourceOption.generationMatch(blob.getGeneration());
         storage.delete(bucketName, postPhoto.getFileName(), precondition);
     }
+
+    public void deleteMeetupImage(String filename) {
+
+        MeetupPhoto meetupPhoto = meetupPhotoRepository.findByFileName(filename).orElseThrow(() -> {
+            throw new ApiException(ApiResponseStatus.BAD_REQUEST);
+        });
+
+        Blob blob = storage.get(bucketName, meetupPhoto.getFileName());
+        Storage.BlobSourceOption precondition = Storage.BlobSourceOption.generationMatch(blob.getGeneration());
+        storage.delete(bucketName, meetupPhoto.getFileName(), precondition);
+    }
 }
