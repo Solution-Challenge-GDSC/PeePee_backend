@@ -4,7 +4,7 @@ import com.gdsc.solutionchallenge.board.entity.Board;
 import com.gdsc.solutionchallenge.board.entity.PostPhoto;
 import com.gdsc.solutionchallenge.board.repository.PostPhotoRepository;
 import com.gdsc.solutionchallenge.global.image.GetGDSRes;
-import com.gdsc.solutionchallenge.global.image.ImageUploadService;
+import com.gdsc.solutionchallenge.global.image.BoardImageUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostPhotoService {
     private final PostPhotoRepository postPhotoRepository;
-    private final ImageUploadService imageUploadService;
+    private final BoardImageUploadService boardImageUploadService;
 
     @Transactional
     public void savePostPhoto(List<PostPhoto> postPhotos){
@@ -52,7 +52,7 @@ public class PostPhotoService {
     @Transactional
     public void deleteAllPostPhotos(List<PostPhoto> postPhotos){
         for (PostPhoto postPhoto : postPhotos) {
-            imageUploadService.deleteImage(postPhoto.getFileName());
+            boardImageUploadService.deleteImage(postPhoto.getFileName());
         }
     }
 

@@ -29,7 +29,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class ImageUploadService {
+public class BoardImageUploadService {
 
     private final Storage storage;
     private final UserRepository userRepository;
@@ -89,16 +89,5 @@ public class ImageUploadService {
         Blob blob = storage.get(bucketName, postPhoto.getFileName());
         Storage.BlobSourceOption precondition = Storage.BlobSourceOption.generationMatch(blob.getGeneration());
         storage.delete(bucketName, postPhoto.getFileName(), precondition);
-    }
-
-    public void deleteImageMeetup(String filename) {
-
-        MeetupPhoto meetupPhoto = meetupPhotoRepository.findByFileName(filename).orElseThrow(() -> {
-            throw new ApiException(ApiResponseStatus.BAD_REQUEST);
-        });
-
-        Blob blob = storage.get(bucketName, meetupPhoto.getFileName());
-        Storage.BlobSourceOption precondition = Storage.BlobSourceOption.generationMatch(blob.getGeneration());
-        storage.delete(bucketName, meetupPhoto.getFileName(), precondition);
     }
 }

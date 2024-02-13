@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                         .authorizationEndpoint(authorizationEndpoint ->
                                 authorizationEndpoint
                                         //권한 부여 엔드포인트
-//                                        .baseUri("/oauth2/authorize")
+                             //           .baseUri("/oauth2/authorize")
                                         //권한 요청 저장
                                         .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
                         )

@@ -12,18 +12,12 @@ import com.gdsc.solutionchallenge.board.repository.PostPhotoRepository;
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponseStatus;
 import com.gdsc.solutionchallenge.global.image.GetGDSRes;
-import com.gdsc.solutionchallenge.global.image.ImageUploadService;
+import com.gdsc.solutionchallenge.global.image.BoardImageUploadService;
 import com.gdsc.solutionchallenge.user.entity.User;
 import com.gdsc.solutionchallenge.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -54,7 +48,7 @@ public class BoardService {
     private final PostPhotoRepository postPhotoRepository;
     private final PostPhotoService postPhotoService;
     private final LikeBoardRepository likeBoardRepository;
-    private final ImageUploadService imageUploadService;
+    private final BoardImageUploadService boardImageUploadService;
 
     @Transactional
     public String createBoard(String email, BoardReq.PostBoardReq postBoardReq, List<MultipartFile> multipartFiles) {
@@ -79,7 +73,7 @@ public class BoardService {
 
             //TODO: 구글 클라우드에 사진 저장
             if (multipartFiles != null) {
-                List<GetGDSRes> getS3ResList = imageUploadService.uploadImage(multipartFiles);
+                List<GetGDSRes> getS3ResList = boardImageUploadService.uploadImage(multipartFiles);
                 postPhotoService.saveAllPostPhotoByBoard(getS3ResList, board);
             }
 
@@ -226,7 +220,7 @@ public class BoardService {
                 postPhotoService.deleteAllPostPhotoByBoard(ids);
 
                 if (multipartFiles != null) {
-                    List<GetGDSRes> getS3ResList = imageUploadService.uploadImage(multipartFiles);
+                    List<GetGDSRes> getS3ResList = boardImageUploadService.uploadImage(multipartFiles);
                     postPhotoService.saveAllPostPhotoByBoard(getS3ResList, board);
                 }
                 return "boardId " + board.getBoardId() + "의 게시글을 수정했습니다.";

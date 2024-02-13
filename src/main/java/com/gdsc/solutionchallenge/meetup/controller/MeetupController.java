@@ -1,7 +1,8 @@
-package com.gdsc.solutionchallenge.meetup;
+package com.gdsc.solutionchallenge.meetup.controller;
 
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponse;
+import com.gdsc.solutionchallenge.meetup.GeometryUtils;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupReq;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupRes;
 import com.gdsc.solutionchallenge.meetup.entity.Meetup;
