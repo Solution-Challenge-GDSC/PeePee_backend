@@ -39,3 +39,4 @@ babybaby.json
 
 ### VS Code ###
 .vscode/
+/src/main/resources/babybaby.json
