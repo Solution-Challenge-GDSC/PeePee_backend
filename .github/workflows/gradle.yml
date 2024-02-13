@@ -79,6 +79,7 @@ jobs:
 
     steps:
 
+
       # 0. 도커에 로그인합니다
       - name: docker login
         run: sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
