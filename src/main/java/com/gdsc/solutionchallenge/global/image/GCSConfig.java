@@ -15,7 +15,7 @@ public class GCSConfig {
 
     @Bean
     public Storage storage() throws IOException {
-        ClassPathResource resource = new ClassPathResource("neat-planet-409813-53c54e5b9594.json");
+        ClassPathResource resource = new ClassPathResource("babybaby.json");
         GoogleCredentials credentials = GoogleCredentials.fromStream(resource.getInputStream());
         StorageOptions storageOptions = StorageOptions.newBuilder()
                 .setProjectId("neat-planet-409813")

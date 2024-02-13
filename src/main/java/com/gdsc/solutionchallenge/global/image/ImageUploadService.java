@@ -4,6 +4,8 @@ import com.gdsc.solutionchallenge.board.entity.PostPhoto;
 import com.gdsc.solutionchallenge.board.repository.PostPhotoRepository;
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponseStatus;
+import com.gdsc.solutionchallenge.meetup.entity.MeetupPhoto;
+import com.gdsc.solutionchallenge.meetup.repository.MeetupPhotoRepository;
 import com.gdsc.solutionchallenge.user.entity.User;
 import com.gdsc.solutionchallenge.user.repository.UserRepository;
 import com.google.cloud.storage.Blob;
@@ -31,6 +33,7 @@ public class ImageUploadService {
 
     private final Storage storage;
     private final UserRepository userRepository;
+    private final MeetupPhotoRepository meetupPhotoRepository;
     private final PostPhotoRepository postPhotoRepository;
     private String baseurl = "https://storage.googleapis.com/bebe0";
 
@@ -86,5 +89,16 @@ public class ImageUploadService {
         Blob blob = storage.get(bucketName, postPhoto.getFileName());
         Storage.BlobSourceOption precondition = Storage.BlobSourceOption.generationMatch(blob.getGeneration());
         storage.delete(bucketName, postPhoto.getFileName(), precondition);
+    }
+
+    public void deleteImageMeetup(String filename) {
+
+        MeetupPhoto meetupPhoto = meetupPhotoRepository.findByFileName(filename).orElseThrow(() -> {
+            throw new ApiException(ApiResponseStatus.BAD_REQUEST);
+        });
+
+        Blob blob = storage.get(bucketName, meetupPhoto.getFileName());
+        Storage.BlobSourceOption precondition = Storage.BlobSourceOption.generationMatch(blob.getGeneration());
+        storage.delete(bucketName, meetupPhoto.getFileName(), precondition);
     }
 }
