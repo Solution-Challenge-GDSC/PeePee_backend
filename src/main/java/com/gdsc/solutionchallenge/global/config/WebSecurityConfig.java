@@ -42,7 +42,7 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/jwt/**", "/oauth2/**", "/login/**").permitAll()
+                        .requestMatchers("/jwt/**", "/oauth2/**", "/login/**", "/actuator/httptrace").permitAll()
                         .requestMatchers( "/","/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
