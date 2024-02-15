@@ -32,11 +32,13 @@ public class MeetupRes {
     public static class GetMeetupRes {
         private Long MeetupId;
         private String createDate; // ex) 2023-07-04
-        private String createTime; // ex) 3분 전
+        private String activityDate;
         private String content;
         private String nickName;
         private Integer parents;
         private Integer baby;
+        private Double latitude;
+        private Double longitude;
         //TODO: 작성자 프로필 이미지
         // private GetS3Res profile; // 작성자 프로필 이미지
 

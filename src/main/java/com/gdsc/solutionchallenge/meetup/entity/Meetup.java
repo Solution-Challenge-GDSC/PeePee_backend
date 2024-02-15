@@ -1,6 +1,6 @@
 package com.gdsc.solutionchallenge.meetup.entity;
 
-import com.gdsc.solutionchallenge.board.entity.PostPhoto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gdsc.solutionchallenge.global.entity.BaseTimeEntity;
 import com.gdsc.solutionchallenge.user.entity.User;
 import jakarta.persistence.*;
@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Point;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -46,6 +45,7 @@ public class Meetup extends BaseTimeEntity {
     // 멤버와 관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     // 게시 사진과 관계매핑

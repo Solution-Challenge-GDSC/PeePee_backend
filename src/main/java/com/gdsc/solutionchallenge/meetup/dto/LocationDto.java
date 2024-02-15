@@ -11,15 +11,15 @@ public class LocationDto {
     @Builder
     public static class Post {
         @NotNull
-        private double longitude;
-
-        @NotNull
         private double latitude;
 
-        public static Post of(double longitude, double latitude) {
+        @NotNull
+        private double longitude;
+
+        public static Post of(double latitude, double longitude) {
             return Post.builder()
-                    .longitude(longitude)
                     .latitude(latitude)
+                    .longitude(longitude)
                     .build();
         }
     }
@@ -27,10 +27,9 @@ public class LocationDto {
     @ToString
     @Builder
     public static class Patch {
+        private double latitude;
 
         private double longitude;
-
-        private double latitude;
     }
 
     @Getter
@@ -39,8 +38,8 @@ public class LocationDto {
     @AllArgsConstructor
     @Builder
     public static class Response {
-        private double longitude;
-
         private double latitude;
+
+        private double longitude;
     }
 }

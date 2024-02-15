@@ -9,6 +9,17 @@ import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 
 public class GeometryUtils {
+    public static double calculateDistanceHaversine(double lat1, double lon1, double lat2, double lon2) {
+        final int R = 6371000; // Radius of the earth in meters
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
     public static LocationDto.Post locationToDto(Point point, double distance, Double bearing) {
         return calculateByDirection(point.getX(), point.getY(), distance, bearing);
     }
@@ -33,7 +44,7 @@ public class GeometryUtils {
 
         longitude = (longitude + 540) % 360 - 180;
 
-        return LocationDto.Post.of(toDegree(longitude), toDegree(latitude));
+        return LocationDto.Post.of(toDegree(latitude), toDegree(longitude));
     }
 
     private static Double toRadian(Double coordinate) {
@@ -55,7 +66,7 @@ public class GeometryUtils {
     public static Point getEmptyPoint() throws ParseException {
         Double latitude = 0.0;
         Double longitude = 0.0;
-        String pointWKT = String.format("POINT(%s %s)", longitude, latitude);
+        String pointWKT = String.format("POINT(%s %s)", latitude, longitude);
         return (Point) new WKTReader().read(pointWKT);
     }
 

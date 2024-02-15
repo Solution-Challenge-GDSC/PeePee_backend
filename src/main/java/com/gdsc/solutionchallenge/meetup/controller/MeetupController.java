@@ -2,16 +2,11 @@ package com.gdsc.solutionchallenge.meetup.controller;
 
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponse;
-import com.gdsc.solutionchallenge.meetup.GeometryUtils;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupReq;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupRes;
-import com.gdsc.solutionchallenge.meetup.entity.Meetup;
+import com.gdsc.solutionchallenge.meetup.dto.LocationDto;
 import com.gdsc.solutionchallenge.meetup.service.MeetupService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.io.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,30 +18,23 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/meetup")
 public class MeetupController {
-    @Autowired
-    private MeetupService meetupService;
 
-    @PostMapping("/checkDistance/{meetupId}")
-    public String checkDistance(@PathVariable Long meetupId, HttpServletRequest request) throws ParseException {
-        Meetup meetup = meetupService.findById(meetupId);
-        if (meetup == null) {
-            return "Meetup not found";
+    private final MeetupService meetupService;
+
+    @GetMapping("/meetups")
+    public ApiResponse<List<MeetupRes.GetMeetupRes>> getMeetupsWithinDistance(
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude
+    ) {
+        try {
+            // 올바른 순서로 위도와 경도 값을 LocationDto.Post 객체에 전달
+            LocationDto.Post userLocation = LocationDto.Post.of(latitude, longitude);
+
+            return new ApiResponse<>(meetupService.findMeetupsWithinDistance(userLocation));
         }
-
-        // 사용자의 현재 위치를 가져오기 위해 HTTP 헤더나 쿼리 파라미터 등을 사용
-        Double latitude = Double.parseDouble(request.getHeader("latitude"));
-        Double longitude = Double.parseDouble(request.getHeader("longitude"));
-
-        // 사용자의 현재 위치를 Point 객체로 변환
-        Point userPoint = (Point) GeometryUtils.createPoint(latitude, longitude);
-
-        // Meetup 엔티티의 위치 정보를 가져와서 Point 객체로 변환
-        Point meetupPoint = (Point) GeometryUtils.createPoint(meetup.getLatitude(), meetup.getLongitude());
-
-        // 두 지점 간의 거리를 계산
-        double distance = userPoint.distance(meetupPoint);
-
-        return "Distance between user and meetup: " + distance + " meters";
+        catch (ApiException exception) {
+            throw new ApiException(exception.getStatus());
+        }
     }
 
     @PostMapping

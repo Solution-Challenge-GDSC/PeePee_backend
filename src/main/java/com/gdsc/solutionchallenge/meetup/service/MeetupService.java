@@ -4,6 +4,8 @@ import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponseStatus;
 import com.gdsc.solutionchallenge.global.image.BoardImageUploadService;
 import com.gdsc.solutionchallenge.global.image.GetGDSRes;
+import com.gdsc.solutionchallenge.meetup.GeometryUtils;
+import com.gdsc.solutionchallenge.meetup.dto.LocationDto;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupReq;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupRes;
 import com.gdsc.solutionchallenge.meetup.entity.Meetup;
@@ -35,6 +37,38 @@ public class MeetupService {
     private final MeetupPhotoRepository meetupPhotoRepository;
     private final MeetupPhotoService meetupPhotoService;
     private final BoardImageUploadService imageUploadService;
+
+    public List<MeetupRes.GetMeetupRes> findMeetupsWithinDistance(LocationDto.Post userLocation) {
+        List<MeetupRes.GetMeetupRes> meetupsWithinDistance = new ArrayList<>();
+
+        List<Meetup> allMeetups = meetupRepository.findAll();
+
+        for (Meetup meetup : allMeetups) {
+            // 사용자 위치와 Meetup 위치 사이의 거리 계산
+            double distance = GeometryUtils.calculateDistanceHaversine(
+                    userLocation.getLatitude(), userLocation.getLongitude(),
+                    meetup.getLatitude(), meetup.getLongitude());
+
+            // 거리가 3000m 이내인 meetup을 결과 리스트에 추가
+            if (distance <= 3000) {
+                MeetupRes.GetMeetupRes getMeetupRes = new MeetupRes.GetMeetupRes(
+                        meetup.getMeetupId(),
+                        convertLocalDateTimeToLocalDate(meetup.getCreatedDate()),
+                        meetup.getActivityDay(),
+                        meetup.getContent(),
+                        meetup.getUser().getNickname(),
+                        meetup.getParents(),
+                        meetup.getBaby(),
+                        meetup.getLatitude(),
+                        meetup.getLongitude()
+
+                );
+                meetupsWithinDistance.add(getMeetupRes);
+            }
+        }
+
+        return meetupsWithinDistance;
+    }
 
     @Transactional
     public String createMeetup(String email, MeetupReq.PostMeetupReq postMeetupReq, List<MultipartFile> multipartFiles) {
@@ -76,7 +110,9 @@ public class MeetupService {
                             convertLocalDateTimeToLocalDate(meetup.getCreatedDate()),
                             convertLocalDateTimeToTime(meetup.getCreatedDate()),
                             meetup.getUser().getNickname(), meetup.getContent(),
-                            meetup.getParents(), meetup.getBaby()))
+                            meetup.getParents(), meetup.getBaby(),
+                            meetup.getLatitude(), meetup.getLongitude()
+                    ))
                     .collect(Collectors.toList());
             return getMeetupRes;
         } catch (Exception exception) {
