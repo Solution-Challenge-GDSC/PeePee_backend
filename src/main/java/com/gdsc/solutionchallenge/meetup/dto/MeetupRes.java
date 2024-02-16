@@ -16,6 +16,7 @@ public class MeetupRes {
         private Long MeetupId;
         private String createDate; // ex) 2023-07-04
         private String createTime; // ex) 3분 전
+        private String activityDay;
         private String nickName;
         private Integer parents;
         private Integer baby;

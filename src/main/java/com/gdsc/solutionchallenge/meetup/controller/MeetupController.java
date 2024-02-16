@@ -1,11 +1,13 @@
 package com.gdsc.solutionchallenge.meetup.controller;
 
+import com.gdsc.solutionchallenge.board.dto.BoardRes;
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponse;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupReq;
 import com.gdsc.solutionchallenge.meetup.dto.MeetupRes;
 import com.gdsc.solutionchallenge.meetup.dto.LocationDto;
 import com.gdsc.solutionchallenge.meetup.service.MeetupService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -48,10 +50,19 @@ public class MeetupController {
         }
     }
 
-    @GetMapping("my")
-    public ApiResponse<List<MeetupRes.GetMeetupRes>> getMeetupById(Principal principal) {
+    @GetMapping("/one/{meetupId}")
+    public ApiResponse<MeetupRes.GetMeetupDetailRes> getMeetupByMeetupId(@PathVariable Long meetupId) {
         try{
-            return new ApiResponse<>(meetupService.getMeetupById(principal.getName()));
+            return new ApiResponse<>(meetupService.getMeetupByMeetupId(meetupId));
+        } catch (ApiException exception){
+            throw new ApiException(exception.getStatus());
+        }
+    }
+
+    @GetMapping("my")
+    public ApiResponse<List<MeetupRes.GetMeetupRes>> getMeetupByUserId(Principal principal) {
+        try{
+            return new ApiResponse<>(meetupService.getMeetupByUserId(principal.getName()));
         } catch (ApiException exception){
             throw new ApiException(exception.getStatus());
         }
@@ -71,8 +82,8 @@ public class MeetupController {
 
 
     /** 게시글을 Id로 삭제하기 **/
-    @DeleteMapping("/{board_id}")
-    public ApiResponse<String> deleteBoard(Principal principal, @PathVariable(name = "meetup_id") Long meetupId){
+    @DeleteMapping("/{meetup_id}")
+    public ApiResponse<String> deleteMeetup(Principal principal, @PathVariable(name = "meetup_id") Long meetupId){
         try{
             return new ApiResponse<>(meetupService.deleteMeetup(principal.getName(), meetupId));
         } catch (ApiException exception){

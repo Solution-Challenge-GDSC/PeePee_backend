@@ -1,5 +1,8 @@
 package com.gdsc.solutionchallenge.meetup.service;
 
+import com.gdsc.solutionchallenge.board.dto.BoardRes;
+import com.gdsc.solutionchallenge.board.entity.Board;
+import com.gdsc.solutionchallenge.board.entity.PostPhoto;
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponseStatus;
 import com.gdsc.solutionchallenge.global.image.BoardImageUploadService;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -102,7 +106,32 @@ public class MeetupService {
     }
 
     @Transactional
-    public List<MeetupRes.GetMeetupRes> getMeetupById(String email) {
+    public MeetupRes.GetMeetupDetailRes getMeetupByMeetupId(Long meetupId) {
+        Meetup meetup = meetupRepository.findById(meetupId).orElseThrow(() -> {
+            throw new ApiException(ApiResponseStatus.NOT_EXIST_POST);
+        });
+        List<MeetupPhoto> meetupPhotos = meetupPhotoRepository.findAllByMeetupId(meetupId).orElse(Collections.emptyList());
+
+
+        List<GetGDSRes> getGDSRes = meetupPhotos.stream()
+                .map(photo -> new GetGDSRes(photo.getImgUrl(), photo.getFileName()))
+                .collect(Collectors.toList());
+        String profile = null;
+        if (meetup.getUser().getProfileImage() != null) {
+            profile = meetup.getUser().getProfileImage();
+        }
+
+
+        MeetupRes.GetMeetupDetailRes getMeetupDetailRes = new MeetupRes.GetMeetupDetailRes(meetup.getMeetupId(),
+                convertLocalDateTimeToLocalDate(meetup.getCreatedDate()), convertLocalDateTimeToTime(meetup.getCreatedDate()),
+                meetup.getActivityDay(), meetup.getUser().getNickname(), meetup.getParents(), meetup.getBaby(),
+                meetup.getUser().getProfileImage(), meetup.getContent(), getGDSRes);
+
+        return getMeetupDetailRes;
+    }
+
+    @Transactional
+    public List<MeetupRes.GetMeetupRes> getMeetupByUserId(String email) {
         try {
             List<Meetup> meetups = meetupRepository.findBoardByUser_EmailOrderByMeetupIdDesc(email);
             List<MeetupRes.GetMeetupRes> getMeetupRes = meetups.stream()

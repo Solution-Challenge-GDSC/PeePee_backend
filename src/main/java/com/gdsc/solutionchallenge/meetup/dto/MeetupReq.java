@@ -25,7 +25,7 @@ public class MeetupReq {
     @Getter
     @Setter
     public static class PatchMeetupReq {
-        private Long MeetupId;
+        private Long meetupId;
         private String content;
         private String activityDay;
         private Integer parents;
