@@ -23,5 +23,14 @@ public class DiaryRes {
         private List<GetGDSRes> getDiaryPost; // 다이어리 사진 리스트
     }
 
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class GetDiaryResWrapper {
+        private DiaryRes.GetDiaryRes myDiary;
+        private List<DiaryRes.GetDiaryRes> otherDiaries;
+    }
 
 }
