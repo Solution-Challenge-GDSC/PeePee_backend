@@ -1,8 +1,5 @@
 package com.gdsc.solutionchallenge.meetup.service;
 
-import com.gdsc.solutionchallenge.board.dto.BoardRes;
-import com.gdsc.solutionchallenge.board.entity.Board;
-import com.gdsc.solutionchallenge.board.entity.PostPhoto;
 import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponseStatus;
 import com.gdsc.solutionchallenge.global.image.BoardImageUploadService;
