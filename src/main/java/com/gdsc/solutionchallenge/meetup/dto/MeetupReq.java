@@ -9,6 +9,7 @@ public class MeetupReq {
     @Getter
     @Setter
     public static class PostMeetupReq {
+        private String title;
         private String content;
         private String activityDay;
         private Integer parents;
@@ -24,6 +25,7 @@ public class MeetupReq {
     @Setter
     public static class PatchMeetupReq {
         private Long meetupId;
+        private String title;
         private String content;
         private String activityDay;
         private Integer parents;

@@ -14,6 +14,7 @@ public class MeetupRes {
     @Setter
     public static class GetMeetupDetailRes {
         private Long MeetupId;
+        private String title;
         private String createDate; // ex) 2023-07-04
         private String createTime; // ex) 3분 전
         private String activityDay;
@@ -32,6 +33,7 @@ public class MeetupRes {
     @Setter
     public static class GetMeetupRes {
         private Long MeetupId;
+        private String title;
         private String createDate; // ex) 2023-07-04
         private String activityDate;
         private String content;
