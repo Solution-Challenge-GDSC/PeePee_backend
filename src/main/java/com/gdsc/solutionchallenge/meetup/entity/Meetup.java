@@ -24,6 +24,9 @@ public class Meetup extends BaseTimeEntity {
     @Column(name = "meetup_id", unique = true, nullable = false)
     private Long meetupId;
 
+    //컨텐츠 제목
+    private String title;
+
     //활동 내용
     private String content;
     //활동 날짜
@@ -52,7 +55,8 @@ public class Meetup extends BaseTimeEntity {
     @OneToMany(mappedBy = "meetup", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<MeetupPhoto> photoList = new ArrayList<>();
 
-    public void updateMeetup(String content, String activityDay, Integer parents, Integer baby, Double latitude, Double longitude){
+    public void updateMeetup(String title, String content, String activityDay, Integer parents, Integer baby, Double latitude, Double longitude){
+        this.title = title;
         this.content = content;
         this.activityDay = activityDay;
         this.parents = parents;

@@ -54,6 +54,7 @@ public class MeetupService {
             if (distance <= 3000) {
                 MeetupRes.GetMeetupRes getMeetupRes = new MeetupRes.GetMeetupRes(
                         meetup.getMeetupId(),
+                        meetup.getTitle(),
                         convertLocalDateTimeToLocalDate(meetup.getCreatedDate()),
                         meetup.getActivityDay(),
                         meetup.getContent(),
@@ -79,6 +80,7 @@ public class MeetupService {
             });
 
             Meetup meetup = Meetup.builder()
+                    .title(postMeetupReq.getTitle())
                     .content(postMeetupReq.getContent())
                     .photoList(new ArrayList<>())
                     .activityDay(postMeetupReq.getActivityDay())
@@ -119,7 +121,7 @@ public class MeetupService {
         }
 
 
-        MeetupRes.GetMeetupDetailRes getMeetupDetailRes = new MeetupRes.GetMeetupDetailRes(meetup.getMeetupId(),
+        MeetupRes.GetMeetupDetailRes getMeetupDetailRes = new MeetupRes.GetMeetupDetailRes(meetup.getMeetupId(), meetup.getTitle(),
                 convertLocalDateTimeToLocalDate(meetup.getCreatedDate()), convertLocalDateTimeToTime(meetup.getCreatedDate()),
                 meetup.getActivityDay(), meetup.getUser().getNickname(), meetup.getParents(), meetup.getBaby(),
                 meetup.getUser().getProfileImage(), meetup.getContent(), getGDSRes);
@@ -132,7 +134,7 @@ public class MeetupService {
         try {
             List<Meetup> meetups = meetupRepository.findBoardByUser_EmailOrderByMeetupIdDesc(email);
             List<MeetupRes.GetMeetupRes> getMeetupRes = meetups.stream()
-                    .map(meetup -> new MeetupRes.GetMeetupRes(meetup.getMeetupId(),
+                    .map(meetup -> new MeetupRes.GetMeetupRes(meetup.getMeetupId(), meetup.getTitle(),
                             convertLocalDateTimeToLocalDate(meetup.getCreatedDate()),
                             convertLocalDateTimeToTime(meetup.getCreatedDate()),
                             meetup.getUser().getNickname(), meetup.getContent(),
@@ -183,7 +185,7 @@ public class MeetupService {
             User writer = meetupRepository.findById(meetupId).get().getUser();
             User visitor = userRepository.findByEmail(email).get();
             if (writer.getUserId() == visitor.getUserId()) {
-                meetup.updateMeetup(patchMeetupReq.getContent(), patchMeetupReq.getActivityDay()
+                meetup.updateMeetup(patchMeetupReq.getTitle(), patchMeetupReq.getContent(), patchMeetupReq.getActivityDay()
                         , patchMeetupReq.getParents(), patchMeetupReq.getBaby()
                         , patchMeetupReq.getLatitude(), patchMeetupReq.getLongitude());
                 //TODO: 사진 업데이트, 지우고 다시 저장
