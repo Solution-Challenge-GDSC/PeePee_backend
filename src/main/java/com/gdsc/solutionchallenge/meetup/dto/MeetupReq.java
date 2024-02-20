@@ -16,6 +16,7 @@ public class MeetupReq {
         private Integer baby;
         private Double latitude;
         private Double longitude;
+        private String category;
     }
 
     @Builder
@@ -32,5 +33,6 @@ public class MeetupReq {
         private Integer baby;
         private Double latitude;
         private Double longitude;
+        private String category;
     }
 }

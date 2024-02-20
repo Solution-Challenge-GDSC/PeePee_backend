@@ -24,6 +24,7 @@ public class MeetupRes {
         private String profileImage; // 작성자 프로필 이미지
         private String content;
         private List<GetGDSRes> getGDSRes; // 게시글 사진 리스트
+        private String category;
     }
 
     @Builder
@@ -42,6 +43,7 @@ public class MeetupRes {
         private Integer baby;
         private Double latitude;
         private Double longitude;
+        private String category;
         //TODO: 작성자 프로필 이미지
         // private GetS3Res profile; // 작성자 프로필 이미지
 

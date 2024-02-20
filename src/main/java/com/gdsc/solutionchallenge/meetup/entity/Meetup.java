@@ -42,6 +42,8 @@ public class Meetup extends BaseTimeEntity {
 
     private Double longitude;
 
+    private String category;
+
     @Transient
     private Point point;
 
@@ -55,7 +57,7 @@ public class Meetup extends BaseTimeEntity {
     @OneToMany(mappedBy = "meetup", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<MeetupPhoto> photoList = new ArrayList<>();
 
-    public void updateMeetup(String title, String content, String activityDay, Integer parents, Integer baby, Double latitude, Double longitude){
+    public void updateMeetup(String title, String content, String activityDay, Integer parents, Integer baby, Double latitude, Double longitude, String category){
         this.title = title;
         this.content = content;
         this.activityDay = activityDay;
@@ -63,6 +65,7 @@ public class Meetup extends BaseTimeEntity {
         this.baby = baby;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.category = category;
     }
     public void addPhotoList(MeetupPhoto meetupPhoto){
         photoList.add(meetupPhoto);
