@@ -23,7 +23,7 @@ public class RefreshToken {
 
 
     @Builder
-    public RefreshToken(String refreshToken, String keyId, String userAgent) {
+    public RefreshToken(String refreshToken, String keyId) {
         this.refreshToken = refreshToken;
         this.keyId = keyId;
     }

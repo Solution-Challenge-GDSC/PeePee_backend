@@ -62,8 +62,8 @@ public class MeetupService {
                         meetup.getParents(),
                         meetup.getBaby(),
                         meetup.getLatitude(),
-                        meetup.getLongitude()
-
+                        meetup.getLongitude(),
+                        meetup.getCategory()
                 );
                 meetupsWithinDistance.add(getMeetupRes);
             }
@@ -88,6 +88,7 @@ public class MeetupService {
                     .baby(postMeetupReq.getBaby())
                     .latitude(postMeetupReq.getLatitude())
                     .longitude(postMeetupReq.getLongitude())
+                    .category(postMeetupReq.getCategory())
                     .user(user)
                     .build();
             meetupRepository.save(meetup);
@@ -124,7 +125,7 @@ public class MeetupService {
         MeetupRes.GetMeetupDetailRes getMeetupDetailRes = new MeetupRes.GetMeetupDetailRes(meetup.getMeetupId(), meetup.getTitle(),
                 convertLocalDateTimeToLocalDate(meetup.getCreatedDate()), convertLocalDateTimeToTime(meetup.getCreatedDate()),
                 meetup.getActivityDay(), meetup.getUser().getNickname(), meetup.getParents(), meetup.getBaby(),
-                meetup.getUser().getProfileImage(), meetup.getContent(), getGDSRes);
+                meetup.getUser().getProfileImage(), meetup.getContent(), getGDSRes, meetup.getCategory());
 
         return getMeetupDetailRes;
     }
@@ -139,7 +140,7 @@ public class MeetupService {
                             convertLocalDateTimeToTime(meetup.getCreatedDate()),
                             meetup.getUser().getNickname(), meetup.getContent(),
                             meetup.getParents(), meetup.getBaby(),
-                            meetup.getLatitude(), meetup.getLongitude()
+                            meetup.getLatitude(), meetup.getLongitude(), meetup.getCategory()
                     ))
                     .collect(Collectors.toList());
             return getMeetupRes;
@@ -187,7 +188,7 @@ public class MeetupService {
             if (writer.getUserId() == visitor.getUserId()) {
                 meetup.updateMeetup(patchMeetupReq.getTitle(), patchMeetupReq.getContent(), patchMeetupReq.getActivityDay()
                         , patchMeetupReq.getParents(), patchMeetupReq.getBaby()
-                        , patchMeetupReq.getLatitude(), patchMeetupReq.getLongitude());
+                        , patchMeetupReq.getLatitude(), patchMeetupReq.getLongitude(), patchMeetupReq.getCategory());
                 //TODO: 사진 업데이트, 지우고 다시 저장
                 List<MeetupPhoto> allByMeetupId = meetupPhotoService.findAllByMeetupId(meetupId);
                 meetupPhotoService.deleteAllMeetupPhotos(allByMeetupId);
