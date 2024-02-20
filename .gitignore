@@ -27,6 +27,8 @@ out/
 !**/src/test/**/out/
 application.yml
 application-oauth.yml
+babybaby.json
+./src/main/resources/babybaby.json
 
 ### NetBeans ###
 /nbproject/private/

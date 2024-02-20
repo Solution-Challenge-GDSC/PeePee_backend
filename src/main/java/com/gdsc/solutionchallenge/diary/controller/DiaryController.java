@@ -46,7 +46,7 @@ public class DiaryController {
     /** 날짜별로 다이어리 조회하기 **/
     @GetMapping
     @Operation(summary = "다이어리 조회", description = "다이어리 조회")
-    public ApiResponse<DiaryRes.GetDiaryRes> getDiaryByDate(Principal principal, @RequestParam String date) {
+    public ApiResponse<DiaryRes.GetDiaryResWrapper> getDiaryByDate(Principal principal, @RequestParam String date) {
         try{
             return new ApiResponse<>(diaryService.getDiaryByDate(principal.getName(), date));
         } catch (ApiException exception){

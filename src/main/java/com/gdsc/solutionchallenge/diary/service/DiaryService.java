@@ -74,9 +74,9 @@ public class DiaryService {
 
 
     @Transactional
-    public DiaryRes.GetDiaryRes getDiaryByDate(String email, String date) {
+    public DiaryRes.GetDiaryResWrapper getDiaryByDate(String email, String date) {
         try {
-            Diary diary = diaryRepository.findByDateAndUserEmail(date, email).orElseThrow(() -> {
+            Diary diaryone = diaryRepository.findByDateAndUserEmail(date, email).orElseThrow(() -> {
                 throw new ApiException(ApiResponseStatus.NOT_EXIST_POST);
             });
             User user = userRepository.findByEmail(email).orElseThrow(() -> {
@@ -85,16 +85,33 @@ public class DiaryService {
 
 
             // 다이어리 사진 가져오기
-            List<DiaryPhoto> diaryPhotos = diaryPhotoRepository.findAllBydiaryId(diary.getDiaryId()).orElse(Collections.emptyList());
+            List<DiaryPhoto> diaryPhotos = diaryPhotoRepository.findAllBydiaryId(diaryone.getDiaryId()).orElse(Collections.emptyList());
 
             List<GetGDSRes> getGDSRes = diaryPhotos.stream()
                     .map(photo -> new GetGDSRes(photo.getImgUrl(), photo.getFileName()))
                     .collect(Collectors.toList());
-            DiaryRes.GetDiaryRes getDiaryRes = new DiaryRes.GetDiaryRes(diary.getDiaryId(), diary.getContent(),
-                    diary.getMood(), diary.isOpened(), diary.getDate(), getGDSRes);
+            DiaryRes.GetDiaryRes getDiaryRes = new DiaryRes.GetDiaryRes(diaryone.getDiaryId(), diaryone.getContent(),
+                    diaryone.getMood(), diaryone.isOpened(), diaryone.getDate(), getGDSRes);
 
+            // 내가 작성한 다이어리를 제외한 5개의 최신 다이어리 가져오기
+            List<Diary> diaries = diaryRepository.findTop5ByIsOpenedAndUserEmailNot(email);
+            List<DiaryRes.GetDiaryRes> getDiaryResList = diaries.stream()
+                    .map(diary -> {
+                        // 여기서 diary 대신 diaryy를 사용해야 합니다. 아래 코드 수정
+                        List<DiaryPhoto> diaryPhotoss = diaryPhotoRepository.findAllBydiaryId(diary.getDiaryId()).orElse(Collections.emptyList());
 
-            return getDiaryRes;
+                        // 각 다이어리 사진을 GetGDSRes 객체로 변환
+                        List<GetGDSRes> getGDSResList = diaryPhotoss.stream()
+                                .map(photo -> new GetGDSRes(photo.getImgUrl(), photo.getFileName()))
+                                .collect(Collectors.toList());
+
+                        // 다이어리 정보와 함께 사진 리스트를 포함시켜 GetDiaryRes 객체 생성
+                        return new DiaryRes.GetDiaryRes(diary.getDiaryId(), diary.getContent(),
+                                diary.getMood(), diary.isOpened(), diary.getDate(), getGDSResList);
+                    })
+                    .collect(Collectors.toList());
+
+            return new DiaryRes.GetDiaryResWrapper(getDiaryRes, getDiaryResList); // 다이어리 리스트를 반환
         } catch (Exception exception) {
             throw new ApiException(DATABASE_ERROR);
         }
