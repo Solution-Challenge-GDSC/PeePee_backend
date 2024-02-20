@@ -37,8 +37,8 @@ public class MeetupController {
 
             return new ApiResponse<>(meetupService.findMeetupsWithinDistance(userLocation));
         }
-        catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+        catch (ApiException exception){
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -51,7 +51,7 @@ public class MeetupController {
             return new ApiResponse<>(meetupService.createMeetup(principal.getName(), postMeetupReq, multipartFiles));
         }
         catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -62,7 +62,7 @@ public class MeetupController {
         try{
             return new ApiResponse<>(meetupService.getMeetupByMeetupId(meetupId));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -73,7 +73,7 @@ public class MeetupController {
         try{
             return new ApiResponse<>(meetupService.getMeetupByUserId(principal.getName()));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -86,7 +86,7 @@ public class MeetupController {
             return new ApiResponse<>(meetupService.modifyMeetup(principal.getName(), patchMeetupReq, multipartFiles));
         }
         catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -98,7 +98,7 @@ public class MeetupController {
         try{
             return new ApiResponse<>(meetupService.deleteMeetup(principal.getName(), meetupId));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 }
