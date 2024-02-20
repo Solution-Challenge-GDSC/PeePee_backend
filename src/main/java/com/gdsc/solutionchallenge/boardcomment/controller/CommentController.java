@@ -37,7 +37,7 @@ public class CommentController {
         try {
             return new ApiResponse<>(commentService.addComment(principal.getName(),boardId, postCommentReq));
         } catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -59,7 +59,7 @@ public class CommentController {
             return new ApiResponse<>(commentService
                     .updateComment(principal.getName(),commentId,patchCommentReq));
         }catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -72,7 +72,7 @@ public class CommentController {
         try{
             return new ApiResponse<>(commentService.deleteComment(principal.getName(),commentId));
         } catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 

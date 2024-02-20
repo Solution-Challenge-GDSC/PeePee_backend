@@ -10,10 +10,12 @@ import com.gdsc.solutionchallenge.global.jwt.JwtTokenUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.security.Principal;
 import java.util.List;
 
@@ -25,7 +27,8 @@ public class BoardController {
     private final BoardService boardService;
 
     /** 게시글 생성하기 **/
-    @PostMapping
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "게시글 생성", description = "게시글 생성")
     public ApiResponse<String> createBoard(Principal principal, @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles,
                                            @Validated @RequestPart(value = "postBoardReq") BoardReq.PostBoardReq postBoardReq) {
@@ -33,7 +36,7 @@ public class BoardController {
             return new ApiResponse<>(boardService.createBoard(principal.getName(), postBoardReq, multipartFiles));
         }
         catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -44,7 +47,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.getBoardsByCategory(category));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -56,7 +59,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.getBoardByBoardId(boardId));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -67,7 +70,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.getBoardById(principal.getName()));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -80,7 +83,7 @@ public class BoardController {
             return new ApiResponse<>(boardService.modifyBoard(principal.getName(), patchBoardReq, multipartFiles));
         }
         catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -92,7 +95,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.deleteBoard(principal.getName(), boardId));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -104,7 +107,7 @@ public class BoardController {
             return new ApiResponse<>(boardService.likeOrUnlikeBoard(principal.getName(), boardId));
         }
         catch (ApiException exception) {
-            throw  new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 

@@ -39,7 +39,7 @@ public class DiaryController {
             return new ApiResponse<>(diaryService.createDiary(principal.getName(), postDiaryReq, multipartFiles));
         }
         catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -50,7 +50,7 @@ public class DiaryController {
         try{
             return new ApiResponse<>(diaryService.getDiaryByDate(principal.getName(), date));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -64,8 +64,7 @@ public class DiaryController {
             return new ApiResponse<>(diaryService.modifyDiary(principal.getName(), patchDiaryReq, multipartFiles));
         }
         catch (ApiException exception){
-            logger.info(exception.getMessage());
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -77,7 +76,7 @@ public class DiaryController {
         try{
             return new ApiResponse<>(diaryService.deleteDiary(principal.getName(), diaryId));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
