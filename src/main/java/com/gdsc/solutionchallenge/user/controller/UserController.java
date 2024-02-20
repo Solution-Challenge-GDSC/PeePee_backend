@@ -1,6 +1,7 @@
 package com.gdsc.solutionchallenge.user.controller;
 
 
+import com.gdsc.solutionchallenge.global.exception.ApiException;
 import com.gdsc.solutionchallenge.global.exception.ApiResponse;
 import com.gdsc.solutionchallenge.user.dto.Token;
 import com.gdsc.solutionchallenge.user.dto.UserReq;
@@ -27,8 +28,8 @@ public class UserController {
     public ApiResponse<UserRes.SignUpRes> signup(@RequestBody UserReq.SignUpReq signUpReq) throws Exception {
         try{
             return new ApiResponse<>(userService.signup(signUpReq));
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
+        } catch (ApiException exception){
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -37,8 +38,8 @@ public class UserController {
     public ApiResponse<Token> login(@RequestBody UserReq.LoginReq loginReq) throws Exception {
         try{
             return new ApiResponse<>(userService.login(loginReq));
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
+        } catch (ApiException exception){
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 

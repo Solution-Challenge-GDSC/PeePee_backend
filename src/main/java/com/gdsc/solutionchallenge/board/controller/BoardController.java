@@ -33,7 +33,7 @@ public class BoardController {
             return new ApiResponse<>(boardService.createBoard(principal.getName(), postBoardReq, multipartFiles));
         }
         catch (ApiException exception) {
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -44,7 +44,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.getBoardsByCategory(category));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -56,7 +56,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.getBoardByBoardId(boardId));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -67,7 +67,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.getBoardById(principal.getName()));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -80,7 +80,7 @@ public class BoardController {
             return new ApiResponse<>(boardService.modifyBoard(principal.getName(), patchBoardReq, multipartFiles));
         }
         catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -92,7 +92,7 @@ public class BoardController {
         try{
             return new ApiResponse<>(boardService.deleteBoard(principal.getName(), boardId));
         } catch (ApiException exception){
-            throw new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
@@ -104,7 +104,7 @@ public class BoardController {
             return new ApiResponse<>(boardService.likeOrUnlikeBoard(principal.getName(), boardId));
         }
         catch (ApiException exception) {
-            throw  new ApiException(exception.getStatus());
+            return new ApiResponse<>(exception.getStatus());
         }
     }
 
