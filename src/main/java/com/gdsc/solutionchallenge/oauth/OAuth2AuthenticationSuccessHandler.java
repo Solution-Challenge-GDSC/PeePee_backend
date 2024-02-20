@@ -112,6 +112,6 @@ public void onAuthenticationSuccess(HttpServletRequest request, HttpServletRespo
     }
 
     private String getDefaultTargetUrl() {
-        return "exp://172.20.10.3:8081/Main";
+        return "pee-pee://Main";
     }
 }
