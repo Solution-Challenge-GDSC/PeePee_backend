@@ -112,6 +112,6 @@ public void onAuthenticationSuccess(HttpServletRequest request, HttpServletRespo
     }
 
     private String getDefaultTargetUrl() {
-        return "exp://172.30.1.57:8081";
+        return "exp://172.30.1.57:8081/Main";
     }
 }
