@@ -112,6 +112,6 @@ public void onAuthenticationSuccess(HttpServletRequest request, HttpServletRespo
     }
 
     private String getDefaultTargetUrl() {
-        return "exp://vusi2tm-anonymous-8081.exp.direct";
+        return "http://localhost:3000";
     }
 }
