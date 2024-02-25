@@ -112,6 +112,6 @@ public void onAuthenticationSuccess(HttpServletRequest request, HttpServletRespo
     }
 
     private String getDefaultTargetUrl() {
-        return "exp://localhost:8081";
+        return "exp://localhost:19000";
     }
 }
