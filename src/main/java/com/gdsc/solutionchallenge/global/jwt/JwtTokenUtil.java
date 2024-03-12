@@ -25,7 +25,7 @@ import java.util.Date;
 public class JwtTokenUtil {
 
     // 유효기간 7일
-    private long accessTokenValidTime = 7 * 24 * 60 * 60 * 1000L;
+    private long accessTokenValidTime = 31 * 24 * 60 * 60 * 1000L;
     // 유효기간 31일
     private long refreshTokenValidTime = 31 * 24 * 60 * 60 * 1000L;
 
