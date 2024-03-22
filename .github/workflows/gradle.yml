@@ -1,11 +1,11 @@
 name: Java CI with Gradle
-
 on:
   push:
     branches: [ "main" ]
-
 permissions:
   contents: read
+
+  
 
 jobs:
   # Spring Boot 애플리케이션을 빌드하여 도커허브에 푸시하는 과정
@@ -13,21 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
      # 0. git ignore에 등록된 application.yml 파일 생성해주기
     - name: make application.yml
       run: |
         touch ./src/main/resources/application.yml
         echo "${{ secrets.PROPERTIES }}" > ./src/main/resources/application.yml
       shell: bash
-
     # 0-1. git ignore에 등록된 application-oauth.yml 파일 생성해주기
     - name: make application-oauth.yml
       run: |
         touch ./src/main/resources/application-oauth.yml
         echo "${{ secrets.PROPERTIES_OAUTH }}" > ./src/main/resources/application-oauth.yml
       shell: bash
-
     # 0-2. git ignore에 등록된 GDS 관련 파일 생성해주기
     - name: create-json
       id: create-json
@@ -36,7 +33,6 @@ jobs:
         name: "babybaby.json"
         json: ${{ secrets.PROPERTIES_JSON }}
         dir: './src/main/resources/'
-
     # 1. Gradlew 실행 권한 추가
     - name: Run chmod to make gradlew executable
       run: chmod +x ./gradlew
@@ -74,10 +70,7 @@ jobs:
     # build-docker-image (위)과정이 완료되어야 실행됩니다.
     needs: build-docker-image
     runs-on: self-hosted
-
     steps:
-
-
       # 0. 도커에 로그인합니다
       - name: docker login
         run: sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
@@ -89,7 +82,6 @@ jobs:
       # 2. 기존의 컨테이너를 중지시킵니다
       - name: docker stop container
         run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
-
       # 3. 최신 이미지를 컨테이너화하여 실행시킵니다
       - name: docker-compose run new container
         run: sudo docker-compose up -d
